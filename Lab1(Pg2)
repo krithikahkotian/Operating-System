@@ -1,0 +1,55 @@
+#include<stdio.h>
+
+void CalWaitingTime(int n,int bt[],int wt[]){
+    wt[0]=0;
+    for(int i=1;i<n;i++){
+        wt[i]=wt[i-1]+bt[i-1];
+    }
+}
+
+void CalTurnAroundTime(int n,int bt[],int wt[],int tt[]){
+    for(int i=0;i<n;i++){
+        tt[i]=wt[i]+bt[i];
+    }
+}
+
+void CalAverage(int p[],int n,int bt[]){
+    int wt[n],tt[n];
+    float avgwt=0,avgtt=0;
+    for(int i=0;i<n;i++){
+        for(int j=i+1;j<n;j++){
+            if(bt[i]>bt[j]){
+                int temp=bt[i];
+                bt[i]=bt[j];
+                bt[j]=temp;
+
+                temp=p[i];
+                p[i]=p[j];
+                p[j]=temp;
+            }
+        }
+    }
+    CalWaitingTime(n,bt,wt);
+    CalTurnAroundTime(n,bt,wt,tt);
+    printf("\nProcess ID\tBurst Time\tWait Time\tTurn Around Time\t");
+    for(int i=0;i<n;i++){
+        printf("\nP%d\t\t%d\t\t%d\t\t%d",p[i],bt[i],wt[i],tt[i]);
+        avgwt+=wt[i];
+        avgtt+=tt[i];
+    }
+    printf("\n\nAverage Waiting Time is %.3f",avgwt/n);
+    printf("\nAverage Turn Around Time is %.3f",avgtt/n);
+}
+
+void main(){
+    int n,bt[20],p[20];
+    printf("Shortest Job First\nEnter the Number of Processes\n");
+    scanf("%d",&n);
+    printf("Enter the Burst time\n");
+    for(int i=0;i<n;i++){
+        p[i]=i+1;
+        printf("P%d:",i+1);
+        scanf("%d",&bt[i]);
+    }
+    CalAverage(p,n,bt);
+}
