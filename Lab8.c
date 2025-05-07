@@ -9,7 +9,7 @@ typedef struct {
     bool allocated;
 } File;
 
-int main() {
+int main() {  
     int disk[MAX_BLOCKS] = {0};
     File files[10];
     int n, i, j, k;
