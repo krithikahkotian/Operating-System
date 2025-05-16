@@ -4,7 +4,7 @@
 
 #define MAX_TASKS 10
 
-typedef struct {
+typedef struct { 
     int id;
     int execution_time;
     int period;
